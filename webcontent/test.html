@@ -1,0 +1,96 @@
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <script src="lib/guess-number.js"></script>
+    
+    <script>
+        $(document).ready(function () {
+            // create game object
+            var thegame = new game(),
+                won = false,
+                help_messages = [{text: "Higher", class: "has-error"},
+                                 {text: "Right!", class: "has-success"},
+                                 {text: "Lower", class: "has-error"}];
+            
+            // local functions
+            function startGame (event) {
+                thegame.start();
+                resetInput();
+                $('#number-range').html(thegame.range);
+                $('#number-guess').attr('min', thegame.stats.min);
+                $('#number-guess').attr('max', thegame.stats.max);
+                $('#number-guess').removeAttr('readonly');
+                won = false;
+            }
+            
+            function handleResult (result, number) {
+                var jq_help = $('#number-help');
+                jq_help.html(help_messages[result + 1].text + " (you guessed " + number + ")");
+                $('#number-group').addClass(help_messages[result + 1].class);
+                if (result == 0) {
+                    $('#number-guess').attr('readonly', 'true');
+                    won = true;
+                    alert('you won');
+                }
+            }
+            
+            function resetInput () {
+                $('#number-group').removeClass(help_messages[0].class + " " + help_messages[1].class);
+                $('#number-guess').val('');
+                $('#number-help').html('');
+            }
+            
+            // set events
+            $('#start-btn').on('click', startGame);
+            
+            $('#number-form').submit(function (event) {
+                var num = parseInt(event.target['number-guess'].value), 
+                    res = thegame.evalGuess(num);
+                if (won) return false;
+                resetInput();
+                handleResult(res, num);
+                return false;
+            });
+            
+            // auto run on doc ready
+            startGame();
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Guess the Number</h2>
+        <div class="row">
+            <div class="col-sm-6">
+                <form class="form" id="number-form">
+                    <div class="form-group" id="number-group">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label for="number-guess">Guess a number between <span id="number-range"></span></label>
+                            </div>
+                            <div class="col-xs-12">
+                                <input type="number" class="form-control" id="number-guess" aria-describedby="number-help" required>
+                            </div>
+                            <div class="col-xs-12">
+                                <span id="number-help" class="help-block"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+<!--        <div class start here!-->
+        <button id="start-btn" type="button" class="btn btn-primary">start a new game</button>
+    </div>
+</body>
+</html>
