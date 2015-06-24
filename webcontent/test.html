@@ -1,4 +1,5 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     
@@ -10,6 +11,9 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <!-- moment.js for date / time -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
     
     <script src="lib/guess-number.js"></script>
     
@@ -26,6 +30,7 @@
             function startGame (event) {
                 thegame.start();
                 resetInput();
+                hideStats();
                 $('#number-range').html(thegame.range);
                 $('#number-guess').attr('min', thegame.stats.min);
                 $('#number-guess').attr('max', thegame.stats.max);
@@ -41,6 +46,8 @@
                     $('#number-guess').attr('readonly', 'true');
                     won = true;
                     alert('you won');
+                    thegame.end();
+                    showStats();
                 }
             }
             
@@ -48,6 +55,23 @@
                 $('#number-group').removeClass(help_messages[0].class + " " + help_messages[1].class);
                 $('#number-guess').val('');
                 $('#number-help').html('');
+            }
+            
+            function showStats () {
+                var dur = moment.duration(thegame.stats.endedAt - thegame.stats.startedAt);
+                $('#stats-number').html(thegame.stats.number);
+                $('#stats-range').html(thegame.range);
+                $('#stats-guesses').html(thegame.stats.guesses.length);
+                $('#stats-duration').html(dur.humanize() + "  (" + dur.toJSON() + ")");
+                $('#stats-row').show();
+            }
+            
+            function hideStats () {
+                $('#stats-row').hide();
+                $('#stats-number').html('');
+                $('#stats-range').html('');
+                $('#stats-guesses').html('');
+                $('#stats-duration').html('');
             }
             
             // set events
@@ -87,10 +111,33 @@
                         </div>
                     </div>
                 </form>
+                <button id="start-btn" type="button" class="btn btn-primary">start a new game</button>
             </div>
         </div>
-<!--        <div class start here!-->
-        <button id="start-btn" type="button" class="btn btn-primary">start a new game</button>
+        <div class="row" id="stats-row" style="margin-top:2em;">
+            <div class="col-sm-6">
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Number</th>
+                            <td id="stats-number"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Range</th>
+                            <td id="stats-range"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Guesses</th>
+                            <td id="stats-guesses"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Duration</th>
+                            <td id="stats-duration"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 </html>

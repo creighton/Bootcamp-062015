@@ -20,24 +20,33 @@
     }
     
     game.prototype.start = function (min, max) {
-        if (this.stats)
+        if (!this.ended && this.stats)
             this.stats.endedAt = this.stats.endedAt || new Date();
         this.previous_stats = this.stats;
+        this.ended = false;
         min = min || 1;
         max = max || 100;
         this.stats = {
             min: min,
             max: max,
-            guesses: 0,
+            guesses: [],
             number: Math.floor(Math.random() * (max - min + 1) + min),
             startedAt: new Date(),
             endedAt: null
         };
         this.range = this.stats.min + " - " + this.stats.max;
+        $('#number-guess').focus();
     };
     
     game.prototype.evalGuess = function (num) {
+        if (this.ended) throw new Exception("game already over");
+        this.stats.guesses.push(num);
         if (num == this.stats.number) return 0;
         return (num > this.stats.number) ? 1 : -1;
     };
+    
+    game.prototype.end = function () {
+        this.stats.endedAt = new Date();
+        this.ended = true;
+    }
 }).call(this);
