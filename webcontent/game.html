@@ -89,8 +89,14 @@
             $('#start-btn').on('click', startGame);
             
             $('#number-form').submit(function (event) {
-                var num = parseInt(event.target['number-guess'].value), 
-                    res = thegame.evalGuess(num);
+                var num = parseInt(event.target['number-guess'].value);
+                try {
+                    var res = thegame.evalGuess(num);
+                } catch (e) { 
+                    // if error, game is over, start again
+                    startGame();
+                    return false; 
+                }
                 if (won) return false;
                 resetInput();
                 handleResult(res, num);
@@ -121,7 +127,12 @@
                                 <label for="number-guess">Guess a number between <span id="number-range"></span></label>
                             </div>
                             <div class="col-xs-12">
-                                <input type="number" class="form-control" id="number-guess" aria-describedby="number-help" required>
+                                <div class="input-group">
+                                    <span class="input-group-btn">
+                                        <button id="guess-btn" class="btn btn-info" type="submit">Guess</button>
+                                    </span>
+                                    <input type="number" class="form-control" id="number-guess" aria-describedby="number-help" required>
+                                </div>
                             </div>
                             <div class="col-xs-12">
                                 <span id="number-help" class="help-block"></span>
