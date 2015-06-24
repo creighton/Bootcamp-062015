@@ -29,6 +29,7 @@
             // local functions
             function startGame (event) {
                 $('#start-btn').attr("disabled",true);
+                $('#start-btn').removeClass('btn-warning').addClass('btn-default')
                 thegame.start();
                 resetInput();
                 hideStats();
@@ -36,8 +37,8 @@
                 $('#number-guess').attr('min', thegame.stats.min);
                 $('#number-guess').attr('max', thegame.stats.max);
                 $('#number-guess').removeAttr('readonly');
-                won = false;
                 $('#number-guess').focus();
+                won = false;
             }
             
             function handleResult (result, number) {
@@ -46,11 +47,12 @@
                 $('#number-group').addClass(help_messages[result + 1].class);
                 if (result == 0) {
                     $('#number-guess').attr('readonly', 'true');
+                    $('#start-btn').attr("disabled",false);
+                    $('#start-btn').removeClass('btn-default').addClass('btn-warning');
                     won = true;
-                    alert('you won');
                     thegame.end();
                     showStats();
-                    $('#start-btn').attr("disabled",false);
+                    alert('You won');
                 }
             }
             
@@ -114,7 +116,7 @@
                         </div>
                     </div>
                 </form>
-                <button id="start-btn" type="button" class="btn btn-primary">start a new game</button>
+                <button id="start-btn" type="button" class="btn btn-warning">New Game</button>
             </div>
         </div>
         <div class="row" id="stats-row" style="margin-top:2em;">
