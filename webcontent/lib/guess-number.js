@@ -35,11 +35,10 @@
             endedAt: null
         };
         this.range = this.stats.min + " - " + this.stats.max;
-        $('#number-guess').focus();
     };
     
     game.prototype.evalGuess = function (num) {
-        if (this.ended) throw new Exception("game already over");
+        if (this.ended) throw new Error("game already over");
         this.stats.guesses.push(num);
         if (num == this.stats.number) return 0;
         return (num > this.stats.number) ? 1 : -1;
