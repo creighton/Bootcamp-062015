@@ -36,6 +36,7 @@
                 $('#number-guess').attr('max', thegame.stats.max);
                 $('#number-guess').removeAttr('readonly');
                 won = false;
+                $('#number-guess').focus();
             }
             
             function handleResult (result, number) {
@@ -61,7 +62,7 @@
                 var dur = moment.duration(thegame.stats.endedAt - thegame.stats.startedAt);
                 $('#stats-number').html(thegame.stats.number);
                 $('#stats-range').html(thegame.range);
-                $('#stats-guesses').html(thegame.stats.guesses.length);
+                $('#stats-guesses').html(thegame.stats.guesses.length + "  (" + thegame.stats.guesses + ")");
                 $('#stats-duration').html(dur.humanize() + "  (" + dur.toJSON() + ")");
                 $('#stats-row').show();
             }
@@ -123,16 +124,16 @@
                             <td id="stats-number"></td>
                         </tr>
                         <tr>
-                            <th scope="row">Range</th>
-                            <td id="stats-range"></td>
-                        </tr>
-                        <tr>
                             <th scope="row">Guesses</th>
                             <td id="stats-guesses"></td>
                         </tr>
                         <tr>
                             <th scope="row">Duration</th>
                             <td id="stats-duration"></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Range</th>
+                            <td id="stats-range"></td>
                         </tr>
                     </tbody>
                 </table>
