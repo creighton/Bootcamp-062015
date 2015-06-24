@@ -28,7 +28,7 @@
             
             // local functions
             function startGame (event) {
-                $('#start-btn').prop("disabled",true);
+                $('#start-btn').attr("disabled",true);
 				thegame.start();
                 resetInput();
                 hideStats();
@@ -50,7 +50,7 @@
                     alert('you won');
                     thegame.end();
                     showStats();
-					$('#start-btn').prop("disabled",false);
+                    $('#start-btn').attr("disabled",false);
                 }
             }
             
