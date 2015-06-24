@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Guess the Number</title>
+    
+    <!-- jquery to support bootstrap and for general dom manipulation -->
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
+    <style>
+    .matbox
+    {
+/*
+        padding-top: 60px;
+        padding-right: 20px;
+*/
+        padding: 0;
+        display: table;
+        margin: auto;
+        width: 650px;
+        height: 350px;
+    }
+    .shadow
+    {
+        border: 1px solid #DDD;
+        border-spacing: 3px;
+        -webkit-box-shadow: 5px 5px 20px #AAA;
+           -moz-box-shadow: 5px 5px 20px #AAA;
+                box-shadow: 5px 5px 20px #AAA;
+    }
+    .jumbotron
+    {
+        background: #85BFDB;
+        text-align: center;
+    }
+    .panel-heading {
+        overflow: hidden;
+        background-size: cover;
+        background-position: center;
+        background:url("images/vwsbx.png") no-repeat center top;
+    }
+        
+    .card {
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+    .card {
+      margin-top: 10px;
+      box-sizing: border-box;
+      border-radius: 2px;
+      background-clip: padding-box;
+    }
+    .card span.card-title {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 300;
+        text-transform: uppercase;
+    }
+    .card .card-image {
+      position: relative;
+      overflow: hidden;
+    }
+    .card .card-image img {
+      border-radius: 2px 2px 0 0;
+      background-clip: padding-box;
+      position: relative;
+      z-index: -1;
+    }
+    .card .card-image span.card-title {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 16px;
+    }
+    .card .card-content {
+      padding: 16px;
+      border-radius: 0 0 2px 2px;
+      background-clip: padding-box;
+      box-sizing: border-box;
+    }
+    .card .card-content p {
+      margin: 0;
+      color: inherit;
+    }
+    .card .card-content span.card-title {
+      line-height: 48px;
+    }
+    .card .card-action {
+      border-top: 1px solid rgba(160, 160, 160, 0.2);
+      padding: 16px;
+    }
+    .card .card-action a {
+      color: #fff;
+      margin-right: 16px;
+      transition: color 0.3s ease;
+      text-transform: uppercase;
+    }
+    .card .card-action a:hover {
+      color: #fafafa;
+      text-decoration: none;
+    }
+    </style>
+    
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <div class="container">
+        <div class="page-header">
+            <h1>xAPI Bootcamp <small>July 2015</small></h1>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img class="img-responsive" src="images/numbers.jpeg">
+                    </div>
+
+                    <div class="card-content">
+                        <p>Guess a Number Demo</p>
+                    </div>
+
+                    <div class="card-action">
+                        <a class="btn btn-primary" href="webcontent/game.html" target="new_blank">Launch</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-md-offset-1">
+                <div class="card">
+                    <div class="card-image">
+                        <img class="img-responsive" src="images/reporting.jpeg">
+                    </div>
+
+                    <div class="card-content">
+                        <p>Data Visualization Demo</p>
+                    </div>
+
+                    <div class="card-action">
+                        <a class="btn btn-primary" href="datavis/vis.html" target="new_blank">Launch</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
