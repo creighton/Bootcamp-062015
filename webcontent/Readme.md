@@ -79,11 +79,11 @@ create an object that will contain a base statement and some helper functions to
           } 
       },
       object: { 
-          id: "http://adlnet.gov/xapi/bootcamp/2015/guess-the-number",
+          id: "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number",
           definition: {
               name: {"en-US": "Guess the Number Game"},
               description: {"en-US": "Simple guess the number game to demonstrate xAPI"},
-              type: "http://adlnet.gov/xapi/activity/type/game"
+              type: "http://adlnet.gov/event/2015/xapibootcamp/activity/type/game"
           }
       }
     }
@@ -107,11 +107,11 @@ create an object that will contain a base statement and some helper functions to
               } 
           },
           object: { 
-              id: "http://adlnet.gov/xapi/bootcamp/2015/guess-the-number",
+              id: "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number",
               definition: {
                   name: {"en-US": "Guess the Number Game"},
                   description: {"en-US": "Simple guess the number game to demonstrate xAPI"},
-                  type: "http://adlnet.gov/xapi/activity/type/game"
+                  type: "http://adlnet.gov/event/2015/xapibootcamp/activity/type/game"
               }
           },
           context: {
