@@ -138,15 +138,16 @@ We want to report 3 things to the LRS: When someone starts a game, when someone 
 a guess. Since there are some things that need added to, or changed in the base statement, it would be nice to add methods 
 to the myXAPI object to centralize those changes.  
   1.  Before we add the 3 functions, add one that will make a copy of the base statement, so when those 3 functions 
-  start changing values, it doesn't change the base statement.
+  start changing values, it doesn't change the base statement.  
   ``` javascript
   // right after all of the var myXAPI..
   myXAPI.getBase = function () {
     return JSON.parse(JSON.stringify(this.statement));
   };
   ```  
+  
   2.  Next add `started`. It will accept the `starttime` so that the statement and the game stats are in sync. It will set the 
-  verb - `http://adlnet.gov/event/2015/xapibootcamp/verb/started` - to the statement, along with the start time.
+  verb - `http://adlnet.gov/event/2015/xapibootcamp/verb/started` - to the statement, along with the start time.  
   ``` javascript
   // after getBase
   myXAPI.started = function (starttime) {
@@ -160,4 +161,5 @@ to the myXAPI object to centralize those changes.
           console.log(resp.status + " - statement id: " + resp.response);
       });
   };
-  ```
+  ```  
+  
