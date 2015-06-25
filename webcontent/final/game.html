@@ -21,7 +21,113 @@
     <!-- moment.js for date / time -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
     
-    <script src="lib/guess-number.js"></script>
+    <script src="xapiwrapper.min.js"></script>
+    <script>
+        var conf = {
+          "endpoint" : "https://lrs.adlnet.gov/xapi/",
+          "user" : "tom",
+          "password" : "1234",
+        };
+        ADL.XAPIWrapper.changeConfig(conf);
+        
+        var myXAPI = {
+            statement: {
+                actor: { 
+                    account: { 
+                        homePage: "http://adlnet.gov/accounts", 
+                        name: "creighton" 
+                    } 
+                },
+                object: { 
+                    id: "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number",
+                    definition: {
+                        name: {"en-US": "Guess the Number Game"},
+                        description: {"en-US": "Simple guess the number game to demonstrate xAPI"},
+                        type: "http://adlnet.gov/event/2015/xapibootcamp/activity/type/game"
+                    }
+                },
+                context: {
+                    contextActivities: {
+                        "grouping": [
+                            {
+                                "id": "http://adlnet.gov/event/2015/xapibootcamp/dev/web"
+                            }
+                        ],
+                        "category": [
+                            {
+                                "id": "http://adlnet.gov/event/2015/xapibootcamp"
+                            }
+                        ]
+                    }
+                }
+            }
+        };
+        
+        myXAPI.getBase = function () {
+            return JSON.parse(JSON.stringify(this.statement));
+        };
+        
+        myXAPI.started = function (starttime) {
+            this.attemptGUID = ADL.ruuid();
+            var stmt = this.getBase();
+            stmt.verb = {
+                id: "http://adlnet.gov/event/2015/xapibootcamp/verb/started",
+                display: {"en-US": "started"}
+            };
+            stmt.timestamp = starttime.toISOString();
+            stmt.context.registration = this.attemptGUID;
+            ADL.XAPIWrapper.sendStatement(stmt, function (resp) {
+                console.log(resp.status + " - statement id: " + resp.response);
+            });
+        };
+        
+        myXAPI.ended = function (stats) {
+            var stmt = this.getBase();
+            stmt.verb = {
+                id: "http://adlnet.gov/event/2015/xapibootcamp/verb/ended",
+                display: {"en-US": "ended"}
+            };
+            stmt.timestamp = stats.endedAt.toISOString();
+            stmt.context.registration = this.attemptGUID;
+            stmt.result = {
+                extensions: {
+                    "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/min": stats.min,
+                    "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/max": stats.max,
+                    "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/guesses": stats.guesses,
+                    "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/number": stats.number,
+                    "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/startedAt": stats.startedAt.toISOString(),
+                    "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/endedAt": stats.endedAt.toISOString()
+                }
+            };
+            ADL.XAPIWrapper.sendStatement(stmt, function (resp) {
+                console.log(resp.status + " - statement id: " + resp.response);
+            });
+        };
+        
+        myXAPI.guessed = function (num) {
+            var stmt = this.getBase();
+            stmt.verb = {
+                id: "http://adlnet.gov/event/2015/xapibootcamp/verb/guessed",
+                display: {"en-US": "guessed"}
+            };
+            stmt.object = {
+                id: "http://adlnet.gov/event/2015/xapibootcamp/number",
+                definition: {
+                    name: {"en-US": "a number"},
+                    description: {"en-US": "Represents a number guessed in the guess a number game"},
+                    type: "http://adlnet.gov/event/2015/xapibootcamp/activity/type/number"
+                }
+            };
+            stmt.timestamp = (new Date()).toISOString();
+            stmt.context.registration = this.attemptGUID;
+            stmt.result = { response: num.toString() };
+            ADL.XAPIWrapper.sendStatement(stmt, function (resp) {
+                console.log(resp.status + " - statement id: " + resp.response);
+            });
+        };
+    </script>
+    
+    <script src="../lib/guess-number.js"></script>
     
     <script>
         $(document).ready(function () {
@@ -45,6 +151,7 @@
                 $('#number-guess').removeAttr('readonly');
                 $('#number-guess').focus();
                 won = false;
+                myXAPI.started(thegame.stats.startedAt);
             }
             
             function handleResult (result, number) {
@@ -58,6 +165,7 @@
                     won = true;
                     thegame.end();
                     showStats();
+                    myXAPI.ended(thegame.stats);
                     alert('You won');
                 }
             }
@@ -92,6 +200,7 @@
                 var num = parseInt(event.target['number-guess'].value);
                 try {
                     var res = thegame.evalGuess(num);
+                    myXAPI.guessed(num);
                 } catch (e) { 
                     // if error, game is over, start again
                     startGame();
