@@ -147,7 +147,9 @@ to the myXAPI object to centralize those changes.
   ```  
   
   2.  Next add `started`. It will accept the `starttime` so that the statement and the game stats are in sync. It will set the 
-  verb - `http://adlnet.gov/event/2015/xapibootcamp/verb/started` - to the statement, along with the start time.  
+  verb - `http://adlnet.gov/event/2015/xapibootcamp/verb/started` - to the statement, along with the start time. It also 
+  generates a GUID for the new attempt. We can then save that in the context registration value, allowing us to link all of 
+  statements for this attempt.  
   ``` javascript
   // after getBase
   myXAPI.started = function (starttime) {
@@ -165,4 +167,59 @@ to the myXAPI object to centralize those changes.
   };
   ```  
   
-  3.  Now add `ended`. This will accept the stats object the game has maintained.
+  3.  Now add `ended`. This will accept the stats object the game has maintained. Since the values of the stats object 
+  don't really fit in any property of a statement, we will use the result `extensions` property to store some of the stats.  
+  ``` javascript  
+  // after started
+  myXAPI.ended = function (stats) {
+      var stmt = this.getBase();
+      stmt.verb = {
+          id: "http://adlnet.gov/event/2015/xapibootcamp/verb/ended",
+          display: {"en-US": "ended"}
+      };
+      stmt.timestamp = stats.endedAt.toISOString();
+      stmt.context.registration = this.attemptGUID;
+      stmt.result = {
+          extensions: {
+              "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/min": stats.min,
+              "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/max": stats.max,
+              "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/guesses": stats.guesses,
+              "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/number": stats.number,
+              "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/startedAt": stats.startedAt.toISOString(),
+              "http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/endedAt": stats.endedAt.toISOString()
+          }
+      };
+      ADL.XAPIWrapper.sendStatement(stmt, function (resp) {
+          console.log(resp.status + " - statement id: " + resp.response);
+      });
+  };
+  ```  
+  
+  4.  Finally add a `guessed` function. This accepts the number guessed and sends a statement to the LRS. Since this 
+  statement would say something like "player guessed a number" and not "player guessed guess the number game", we need 
+  to change the the object of the statement, along with adding the number to the result `response` and setting the verb 
+  to `http://adlnet.gov/event/2015/xapibootcamp/verb/guessed`.  
+  ``` javascript
+  // after ended
+  myXAPI.guessed = function (num) {
+      var stmt = this.getBase();
+      stmt.verb = {
+          id: "http://adlnet.gov/event/2015/xapibootcamp/verb/guessed",
+          display: {"en-US": "guessed"}
+      };
+      stmt.object = {
+          id: "http://adlnet.gov/event/2015/xapibootcamp/number",
+          definition: {
+              name: {"en-US": "a number"},
+              description: {"en-US": "Represents a number guessed in the guess a number game"},
+              type: "http://adlnet.gov/event/2015/xapibootcamp/activity/type/number"
+          }
+      };
+      stmt.timestamp = (new Date()).toISOString();
+      stmt.context.registration = this.attemptGUID;
+      stmt.result = { response: num.toString() };
+      ADL.XAPIWrapper.sendStatement(stmt, function (resp) {
+          console.log(resp.status + " - statement id: " + resp.response);
+      });
+  };
+  ```
