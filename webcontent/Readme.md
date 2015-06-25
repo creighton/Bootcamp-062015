@@ -14,7 +14,7 @@ LRS easier. Although this is a small tutorial it shows you how to:
 The first step is to download the xAPI Wrapper file. The easiest way is to download the minified version on GitHub.  
   1.  Download the latest [xapiwrapper.min.js release](https://github.com/adlnet/xAPIWrapper/releases/tag/v1.5.0)
   2.  Save `xapiwrapper.min.js` in the webcontent folder with `game.html` (You can save it anywhere you wish, just change the source link accordingly)
-  3.  Add a `<script>` tag in `game.html` to include the xAPI Wrapper
+  3.  Add a `<script>` tag in the `<head>` of the `game.html` to include the xAPI Wrapper. (right between 'moment.js' and 'guess-number.js')
   ``` html
   ...
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
