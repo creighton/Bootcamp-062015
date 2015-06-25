@@ -223,3 +223,68 @@ to the myXAPI object to centralize those changes.
       });
   };
   ```
+
+## Step 5 - Using myXAPI
+Now that everything is set up, it's time to call those helper functions during the game.  
+  1.  Call `started` at the end of the `startGame` function in `game.html`.
+  ``` javascript
+  // local functions
+  function startGame (event) {
+      $('#start-btn').attr("disabled",true);
+      $('#start-btn').removeClass('btn-warning').addClass('btn-default')
+      thegame.start();
+      resetInput();
+      hideStats();
+      $('#number-range').html(thegame.range);
+      $('#number-guess').attr('min', thegame.stats.min);
+      $('#number-guess').attr('max', thegame.stats.max);
+      $('#number-guess').removeAttr('readonly');
+      $('#number-guess').focus();
+      won = false;
+      myXAPI.started(thegame.stats.startedAt);
+  }
+  ```
+  
+  2. Call `ended` in the `handleResult` function when the result is 0.
+  ``` javascript
+  function handleResult (result, number) {
+      var jq_help = $('#number-help');
+      jq_help.html(help_messages[result + 1].text + " (you guessed " + number + ")");
+      $('#number-group').addClass(help_messages[result + 1].class);
+      if (result == 0) {
+          $('#number-guess').attr('readonly', 'true');
+          $('#start-btn').attr("disabled",false);
+          $('#start-btn').removeClass('btn-default').addClass('btn-warning');
+          won = true;
+          thegame.end();
+          showStats();
+          myXAPI.ended(thegame.stats);
+          alert('You won');
+      }
+  }
+  ```  
+  
+  3. Call `guessed` in the try/catch in the form submit event.
+  ``` javascript
+  $('#number-form').submit(function (event) {
+      var num = parseInt(event.target['number-guess'].value);
+      try {
+          var res = thegame.evalGuess(num);
+          myXAPI.guessed(num);
+      } catch (e) { 
+          // if error, game is over, start again
+          startGame();
+          return false; 
+      }
+      if (won) return false;
+      resetInput();
+      handleResult(res, num);
+      return false;
+  });
+  ```  
+  
+  ## Step 6 - Try the game
+  The game should report your attempts to the ADL LRS [view here](http://adlnet.github.io/xapi-statement-viewer/).
+  
+  ## Bonus Challenges
+  
