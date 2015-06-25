@@ -64,8 +64,8 @@ create an object that will contain a base statement and some helper functions to
   ```  
   
   2. Add the base statement to the myXAPI object with actor and object. This is the object we will use for the started and 
-  statements. When it comes to reporting guesses, we will change the object. Change the actor's account name to something 
-  unique to you.
+  ended statements. When it comes to reporting guesses, we will change the object. Change the actor's account name to 
+  something unique to you.
   ``` javascript
   ...
   ADL.XAPIWrapper.changeConfig(conf);
@@ -151,15 +151,18 @@ to the myXAPI object to centralize those changes.
   ``` javascript
   // after getBase
   myXAPI.started = function (starttime) {
+      this.attemptGUID = ADL.ruuid();
       var stmt = this.getBase();
       stmt.verb = {
           id: "http://adlnet.gov/event/2015/xapibootcamp/verb/started",
           display: {"en-US": "started"}
       };
       stmt.timestamp = starttime.toISOString();
+      stmt.context.registration = this.attemptGUID;
       ADL.XAPIWrapper.sendStatement(stmt, function (resp) {
           console.log(resp.status + " - statement id: " + resp.response);
       });
   };
   ```  
   
+  3.  Now add `ended`. This will accept the stats object the game has maintained.
