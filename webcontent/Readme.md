@@ -283,8 +283,17 @@ Now that everything is set up, it's time to call those helper functions during t
   });
   ```  
   
-  ## Step 6 - Try the game
-  The game should report your attempts to the ADL LRS [view here](http://adlnet.github.io/xapi-statement-viewer/).
-  
-  ## Bonus Challenges
-  
+## Step 6 - Try the game
+The game should report your attempts to the ADL LRS [view here](http://adlnet.github.io/xapi-statement-viewer/).
+
+## Bonus Challenges
+If you have extra time and would like to try out more ...  
+
+### Use launch parameters to configure xAPI Wrapper
+The xAPI Wrapper can look at the URL parameters for configuration settings.  
+  1.  Read about using URL parameters to change the xAPI Wrapper configuration [here](https://github.com/adlnet/xAPIWrapper/blob/master/README.md#launch-parameters)  
+  2.  Create a launching page that has a url, with launch parameters, to the game.html page.
+  3.  See if the values were changed based on those parameters. (note: our conf and base statement may overwrite 
+  the values from launch)
+
+### 
