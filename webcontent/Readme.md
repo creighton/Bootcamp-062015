@@ -296,4 +296,17 @@ The xAPI Wrapper can look at the URL parameters for configuration settings.
   3.  See if the values were changed based on those parameters. (note: our conf and base statement may overwrite 
   the values from launch)
 
-### 
+### Add inputs to the page to allow the player to change the actor name
+The game currently has the actor hardcoded to whatever you chose as the name during this tutorial. Update the page 
+so that a user can change that name.
+  1.  Show the current name on the page
+  2.  Add an input field to change the name
+  3.  Update the base statement to use the new name
+  4.  ** Can you change the user name using the URL parameters? **
+
+### Use the xAPI Wrapper to get statements for the current actor  
+The xAPI Wrapper can also get statements. There is a session about reporting later in the day but if you have time 
+you can try to get statements now. 
+  1.  Look at the [get statements](https://github.com/adlnet/xAPIWrapper#get-statements) section of the xAPI Wrapper, specifically [getting statements based on search parameters](https://github.com/adlnet/xAPIWrapper#get-statements-based-on-search-parameters).
+  2.  Try to filter the statements based on actor and activity id (see [xAPI Get Statements](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements) for the filter parameters)
+  3.  Display the results on the game page
