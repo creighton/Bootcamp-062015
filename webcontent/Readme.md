@@ -91,4 +91,45 @@ create an object that will contain a base statement and some helper functions to
   </script>
   ``` 
   
-  3. 
+  3. Add context activity grouping and category activities to the base statement. These are used to tag these statements 
+  as being part of this xAPI Bootcamp, and part of the web development session. (We can use those values later to retrieve 
+  statements from the LRS)  
+  ``` javascript
+  ...
+  ADL.XAPIWrapper.changeConfig(conf);
+  
+  var myXAPI = {
+      statement: {
+          actor: { 
+              account: { 
+                  homePage: "http://adlnet.gov/accounts", 
+                  name: "<change this>" 
+              } 
+          },
+          object: { 
+              id: "http://adlnet.gov/xapi/bootcamp/2015/guess-the-number",
+              definition: {
+                  name: {"en-US": "Guess the Number Game"},
+                  description: {"en-US": "Simple guess the number game to demonstrate xAPI"},
+                  type: "http://adlnet.gov/xapi/activity/type/game"
+              }
+          },
+          context: {
+              contextActivities: {
+                  "grouping": [
+                      {
+                          "id": "http://adlnet.gov/event/2015/xapibootcamp/dev/web"
+                      }
+                  ],
+                  "category": [
+                      {
+                          "id": "http://adlnet.gov/event/2015/xapibootcamp"
+                      }
+                  ]
+              }
+          }
+      }
+  };
+  </script>
+  ```
+
