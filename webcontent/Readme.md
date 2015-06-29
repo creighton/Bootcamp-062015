@@ -29,10 +29,9 @@ The first step is to download the xAPI Wrapper file. The easiest way is to downl
   ```
   
 ## Step 2 - Configure the xAPI Wrapper  
-Next you have to configure the xAPI Wrapper. By default, the xAPI Wrapper is configured to communicate with an lrs at localhost. We want to send statements to the ADL LRS, so:  
-  1.  See the [xAPI Wrapper Readme](https://github.com/adlnet/xAPIWrapper/blob/master/README.md#configuration) for ways to configure the wrapper
-  2.  Add a `<script>` tag to the `game.html` after the xapiwrapper `<script>` tag
-  3.  Put in the configuration values. If you have ADL LRS credentials, you may use them for the `user` and `password` values. If not, you may use `tom` and `1234`  
+Next you have to [configure the xAPI Wrapper](https://github.com/adlnet/xAPIWrapper/blob/master/README.md#configuration). By default, the xAPI Wrapper is configured to communicate with an lrs at localhost. We want to send statements to the ADL LRS, so:  
+  1.  Add a `<script>` tag to the `game.html` after the xapiwrapper `<script>` tag
+  2.  Put in the configuration values. If you have ADL LRS credentials, you may use them for the `user` and `password` values. If not, you may use `tom` and `1234`  
   ``` html
   ...
   <script src="xapiwrapper.min.js"></script>
