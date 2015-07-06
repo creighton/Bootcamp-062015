@@ -14,7 +14,7 @@ LRS easier. Although this is a small tutorial it shows you how to:
 The first step is to download the xAPI Wrapper file. The easiest way is to download the minified version on GitHub.  
   1.  Download the latest [xapiwrapper.min.js release](https://github.com/adlnet/xAPIWrapper/releases/tag/v1.5.0)
   2.  Save `xapiwrapper.min.js` in the webcontent folder with `game.html` (You can save it anywhere you wish, just change the source link accordingly)
-  3.  Add a `<script>` tag in `game.html` to include the xAPI Wrapper
+  3.  Add a `<script>` tag in the `<head>` of the `game.html` to include the xAPI Wrapper. (right between 'moment.js' and 'guess-number.js')
   ``` html
   ...
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
@@ -29,10 +29,9 @@ The first step is to download the xAPI Wrapper file. The easiest way is to downl
   ```
   
 ## Step 2 - Configure the xAPI Wrapper  
-Next you have to configure the xAPI Wrapper. By default, the xAPI Wrapper is configured to communicate with an lrs at localhost. We want to send statements to the ADL LRS, so:  
-  1.  See the [xAPI Wrapper Readme](https://github.com/adlnet/xAPIWrapper/blob/master/README.md#configuration) for ways to configure the wrapper
-  2.  Add a `<script>` tag to the `game.html` after the xapiwrapper `<script>` tag
-  3.  Put in the configuration values. If you have ADL LRS credentials, you may use them for the `user` and `password` values. If not, you may use `tom` and `1234`  
+Next you have to [configure the xAPI Wrapper](https://github.com/adlnet/xAPIWrapper/blob/master/README.md#configuration). By default, the xAPI Wrapper is configured to communicate with an lrs at localhost. We want to send statements to the ADL LRS, so:  
+  1.  Add a `<script>` tag to the `game.html` after the xapiwrapper `<script>` tag
+  2.  Put in the configuration values. If you have ADL LRS credentials, you may use them for the `user` and `password` values. If not, you may use `tom` and `1234`  
   ``` html
   ...
   <script src="xapiwrapper.min.js"></script>
@@ -283,8 +282,30 @@ Now that everything is set up, it's time to call those helper functions during t
   });
   ```  
   
-  ## Step 6 - Try the game
-  The game should report your attempts to the ADL LRS [view here](http://adlnet.github.io/xapi-statement-viewer/).
-  
-  ## Bonus Challenges
-  
+## Step 6 - Try the game
+The game should report your attempts to the ADL LRS [view here](http://adlnet.github.io/xapi-statement-viewer/).
+
+## Bonus Challenges
+If you have extra time and would like to try out more ...  
+
+### Use launch parameters to configure xAPI Wrapper
+The xAPI Wrapper can look at the URL parameters for configuration settings.  
+  1.  Read about using URL parameters to change the xAPI Wrapper configuration [here](https://github.com/adlnet/xAPIWrapper/blob/master/README.md#launch-parameters)  
+  2.  Create a launching page that has a url, with launch parameters, to the game.html page.
+  3.  See if the values were changed based on those parameters. (note: our conf and base statement may overwrite 
+  the values from launch)
+
+### Add inputs to the page to allow the player to change the actor name
+The game currently has the actor hardcoded to whatever you chose as the name during this tutorial. Update the page 
+so that a user can change that name.
+  1.  Show the current name on the page
+  2.  Add an input field to change the name
+  3.  Update the base statement to use the new name
+  4.  ** Can you change the user name using the URL parameters? **
+
+### Use the xAPI Wrapper to get statements for the current actor  
+The xAPI Wrapper can also get statements. There is a session about reporting later in the day but if you have time 
+you can try to get statements now. 
+  1.  Look at the [get statements](https://github.com/adlnet/xAPIWrapper#get-statements) section of the xAPI Wrapper, specifically [getting statements based on search parameters](https://github.com/adlnet/xAPIWrapper#get-statements-based-on-search-parameters).
+  2.  Try to filter the statements based on actor and activity id (see [xAPI Get Statements](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#723-getstatements) for the filter parameters)
+  3.  Display the results on the game page
