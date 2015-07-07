@@ -129,12 +129,14 @@
 				opts.customize(chart, event);
 			
 			var next = self.child || self.parent;
-			if(next && opts.eventChartType){
+			
+			if(opts.click) chart[opts.eventChartType].dispatch.on("elementClick", opts.click);
+			else if(next && opts.eventChartType){
 				
 				//Find a way to prevent the addition of click handlers every time this chart is drawn
 				chart[opts.eventChartType].dispatch.on("elementClick", function(e) {
-					e.in = e.in ? e.in : e.point.in;
-					e.out = e.out ? e.out : e.point.out;
+					e.in = e.in ? e.in : (e.point || e.data).in;
+					e.out = e.out ? e.out : (e.point || e.data).out;
 					if(next instanceof Array){
 						for(var i = 0; i < next.length; i++){
 							//always clear the next chart before redrawing
