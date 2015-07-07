@@ -72,7 +72,31 @@
     var actorChart = dash.createBarChart({
         container: "#chart2",
         groupBy: 'timestamp',
-        aggregate: ADL.count(),
+        pre: function(data, event) {
+            var name = event.in;
+            data.contents = data.contents.map(function(cur, idx, arr) {
+                if (cur.actor.account && cur.actor.account.name == name) 
+                   return cur;
+            }).filter(function(n){ return n != undefined });
+            return data;
+        },
+        aggregate:  ADL.select('result.extensions[http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/guesses].length')
+//        aggregate: function(chart, data) {
+//            var d = this.data.contents;
+//            var ret = [];
+//            for (var idx in d) {
+//                var g = {};
+//                g.data = [d[idx]];
+//                g.count = g.data[0].result.extensions['http://adlnet.gov/event/2015/xapibootcamp/guess-the-number/ext/guesses'].length;
+//                g.sample = g.data[0];
+//                g.group = g.data[0].timestamp;
+//                ret.push(g);
+//            }
+//            var out = new ADL.CollectionSync();
+//            out.contents = ret;
+//            return out.exec(this.cb);
+//            
+//        }
 //        child: guesses
     });
     
