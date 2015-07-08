@@ -97,6 +97,7 @@
             .color(d3.scale.category10().range())
             .duration(300)
             .clipVoronoi(false)
+            .interpolate("cardinal")
         ;
         d3.select('#chart3')
             .datum(formatData(event.data))
