@@ -5,16 +5,16 @@
 The following table lists the properties of a statement that can be used to query the LRS. See the xAPI spec [for more details](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#stmtapiget).
 
 ### id
-__GET Params:__ statementId  
-__Example:__ /statements?statementId=9847e454-6ae7-4d00-ba6b-04f209171de6  
+  >__GET Params:__ statementId  
+  >__Example:__ /statements?statementId=9847e454-6ae7-4d00-ba6b-04f209171de6  
   
 ### actor
-__GET Params:__ agent  
-__Example:__ /statements?agent={"mbox":"mailto:learner@example.com"}  
+  >__GET Params:__ agent  
+  >__Example:__ /statements?agent={"mbox":"mailto:learner@example.com"}  
 
-### verb
-__GET Params:__ verb  
-__Example:__ /statements?verb=http://adlnet.gov/expapi/verbs/experienced  
+### verb  
+  __GET Params:__ verb  
+  __Example:__ /statements?verb=http://adlnet.gov/expapi/verbs/experienced  
   
 ### object <small>(when it is an Activity)</small>  
 __GET Params:__ activity  
