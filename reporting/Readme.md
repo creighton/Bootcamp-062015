@@ -3,6 +3,15 @@
 
 ## Searchable Properties in a Statement
 The following table lists the properties of a statement that can be used to query the LRS. See the xAPI spec [for more details](https://github.com/adlnet/xAPI-Spec/blob/master/xAPI.md#stmtapiget).
+
+### id
+__GET Params:__ statementId  
+__Example:__ /statements?statementId=9847e454-6ae7-4d00-ba6b-04f209171de6
+
+### actor
+__GET Params:__ agent  
+__Example:__ /statements?agent={"mbox":"mailto:learner@example.com"}  
+
 <table>
   <thead>
     <tr><th>Property</th><th>GET Request Parameters</th></tr>
@@ -10,19 +19,21 @@ The following table lists the properties of a statement that can be used to quer
   </thead>
   <tbody>
     <tr>
-      <th>id</th><td>statementId</td>
+      <td><strong>id</strong></td><td>statementId</td>
     </tr>
     <tr>
       <td colspan=2>/statements?statementId=9847e454-6ae7-4d00-ba6b-04f209171de6</td>
     </tr>
+    <tr><td colspan=2>&nbsp;</td></tr>
     <tr>
-      <th>actor</th><td>agent</td>
+      <td><strong>actor</strong></td><td>agent</td>
     </tr>
     <tr>
       <td colspan=2>/statements?agent={"mbox":"mailto:learner@example.com"}</td>
     </tr>
+    <tr><td colspan=2>&nbsp;</td></tr>
     <tr>
-      <th>verb</th><td>verb</td>
+      <td><strong>verb</strong></td><td>verb</td>
     </tr>
     <tr>
       <td colspan=2>/statements?verb=http://adlnet.gov/expapi/verbs/experienced</td>
