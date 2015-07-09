@@ -12,6 +12,23 @@ __Example:__ /statements?statementId=9847e454-6ae7-4d00-ba6b-04f209171de6
 __GET Params:__ agent  
 __Example:__ /statements?agent={"mbox":"mailto:learner@example.com"}  
 
+### id
+<dl class="dl-horizontal">
+  <dt>GET Params</dt>
+  <dd>statementId</dd>
+  <dt>Example</dt>
+  <dd>/statements?statementId=9847e454-6ae7-4d00-ba6b-04f209171de6</dd>
+</dl>
+
+### actor
+<dl class="dl-horizontal">
+  <dt>GET Params</dt>
+  <dd>agent</dd>
+  <dt>Example</dt>
+  <dd>/statements?agent={"mbox":"mailto:learner@example.com"} </dd>
+</dl>
+
+
 <table>
   <thead>
     <tr><th>Property</th><th>GET Request Parameters</th></tr>
