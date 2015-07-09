@@ -13,12 +13,12 @@ The following table lists the properties of a statement that can be used to quer
   >__Example:__ /statements?agent={"mbox":"mailto:learner@example.com"}  
 
 ### verb  
-  __GET Params:__ verb  
-  __Example:__ /statements?verb=http://adlnet.gov/expapi/verbs/experienced  
+&emsp;__GET Params:__ verb  
+&emsp;__Example:__ /statements?verb=http://adlnet.gov/expapi/verbs/experienced  
   
 ### object <small>(when it is an Activity)</small>  
-__GET Params:__ activity  
-__Example:__ /statements?activity=http://adlnet.gov/event/2015/xapibootcamp/guess-the-number  
+&emsp;__GET Params:__ activity  
+&emsp;__Example:__ /statements?activity=http://adlnet.gov/event/2015/xapibootcamp/guess-the-number  
   
 ### object <small>(when it is an Agent or Group)</small>
 __GET Params:__ agent and related_agents  
